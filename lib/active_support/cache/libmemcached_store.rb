@@ -57,7 +57,7 @@ module ActiveSupport
         values
       rescue Memcached::Error => e
         log_error(e)
-        nil
+        {}
       end
 
       def reset
