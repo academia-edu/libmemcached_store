@@ -43,13 +43,18 @@ module ActiveSupport
         options = names.extract_options!
         options = merged_options(options)
 
-        if (values = @cache.get(names))
-          results = {}
-          values.each { |k, v| results[k] = deserialize_entry(v).value }
-          results
-        else
-          {}
+        keys_to_names = names.inject({}) do |hash, name|
+          hash[namespaced_key(name, options)] = name
+          hash
         end
+
+        raw_values = @cache.get(keys_to_names.keys) || {}
+
+        values = {}
+        raw_values.each do |key, value|
+          values[keys_to_names[key]] = deserialize_entry(value).value
+        end
+        values
       rescue Memcached::Error => e
         log_error(e)
         nil
