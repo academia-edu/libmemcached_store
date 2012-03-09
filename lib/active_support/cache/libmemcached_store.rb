@@ -51,6 +51,22 @@ module ActiveSupport
         @cache.stats
       end
 
+      def read_multi(*names)
+        options = names.extract_options!
+        options = merged_options(options)
+
+        if (values = @cache.get(names))
+          results = {}
+          values.each { |k, v| results[k] = deserialize_entry(v).value }
+          results
+        else
+          {}
+        end
+      rescue Memcached::Error => e
+        log_error(e)
+        nil
+      end
+
       protected
 
       def read_entry(key, options = nil)
