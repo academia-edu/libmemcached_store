@@ -67,6 +67,10 @@ module ActiveSupport
         nil
       end
 
+      def reset
+        @cache.reset
+      end
+
       protected
 
       def read_entry(key, options = nil)
