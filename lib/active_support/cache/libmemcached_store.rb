@@ -14,7 +14,7 @@ module ActiveSupport
         addresses.flatten!
         @options = addresses.extract_options!
         @addresses = addresses
-        reset
+        @cache = Memcached.new(@addresses, @options.reverse_merge(DEFAULT_OPTIONS))
       end
 
       def increment(key, amount = 1, options = nil)
@@ -61,8 +61,7 @@ module ActiveSupport
       end
 
       def reset
-        @cache = Memcached.new(
-          @addresses, @options.reverse_merge(DEFAULT_OPTIONS))
+        @cache.quit
       end
 
       protected
