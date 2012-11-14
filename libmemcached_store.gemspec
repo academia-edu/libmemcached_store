@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency('rack')
   s.add_development_dependency('rake')
-  s.add_development_dependency('mocha')
+  s.add_development_dependency('mocha', '>= 0.13.0')
   s.add_development_dependency('activesupport', '~> 3.0')
   s.add_development_dependency('actionpack', '~> 3.0')
 end

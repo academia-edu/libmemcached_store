@@ -21,18 +21,17 @@ module ActiveSupport
         log 'incrementing', key, amount
         @cache.incr(key, amount)
       rescue Memcached::Error
-        nil
       end
 
       def decrement(key, amount = 1, options = nil)
         log 'decrementing', key, amount
         @cache.decr(key, amount)
       rescue Memcached::Error
-        nil
       end
 
       def clear(options=nil)
         @cache.flush
+      rescue Memcached::Error
       end
 
       def stats

@@ -1,8 +1,4 @@
 require 'test_helper'
-require 'memcached'
-require 'active_support'
-require 'active_support/core_ext/module/aliasing'
-require 'active_support/core_ext/object/duplicable'
 require 'active_support/cache/libmemcached_store'
 
 # Make it easier to get at the underlying cache options during testing.
@@ -334,5 +330,12 @@ class LibmemcachedStoreTest < MiniTest::Unit::TestCase
 
     # everything is gone
     assert_nil @cache.read("xxx")
+  end
+
+  def test_without_server
+    cache = ActiveSupport::Cache.lookup_store :libmemcached_store, 'localhost:45345'
+    assert_equal nil, cache.read("xxx")
+    assert_equal false, cache.write("xxx", "xxx")
+    assert_equal nil, cache.clear("xxx")
   end
 end
