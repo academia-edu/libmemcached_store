@@ -319,4 +319,20 @@ class LibmemcachedStoreTest < MiniTest::Unit::TestCase
     assert_equal :modula, store.options[:distribution]
     assert_equal true, store.options[:tcp_nodelay]
   end
+
+  def test_clear
+    @cache.write("xxx", 1)
+    assert_equal 1, @cache.read("xxx")
+    @cache.clear
+
+    # everything is gone
+    assert_nil @cache.read("xxx")
+
+    @cache.write("xxx", 1)
+    assert_equal 1, @cache.read("xxx")
+    @cache.clear("foooo") # does not blow up
+
+    # everything is gone
+    assert_nil @cache.read("xxx")
+  end
 end

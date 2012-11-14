@@ -31,7 +31,7 @@ module ActiveSupport
         nil
       end
 
-      def clear
+      def clear(options=nil)
         @cache.flush
       end
 
