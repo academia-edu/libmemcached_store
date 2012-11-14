@@ -1,8 +1,4 @@
 require 'test_helper'
-require 'memcached'
-require 'active_support'
-require 'active_support/core_ext/module/aliasing'
-require 'active_support/core_ext/object/duplicable'
 require 'active_support/cache/libmemcached_store'
 
 # Make it easier to get at the underlying cache options during testing.
